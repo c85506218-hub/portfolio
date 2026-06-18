@@ -1,652 +1,105 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
+<!doctype html>
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>c85506218 作品集</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #f7f6f3;
-    --surface: #ffffff;
-    --surface-2: #f0ede8;
-    --border: #e2ddd6;
-    --text-primary: #1a1916;
-    --text-secondary: #6b6560;
-    --text-muted: #a09a94;
-    --accent: #2d6a4f;
-    --accent-light: #e8f3ee;
-    --accent-dim: #52b788;
-    --tag-fire: #fff0e8;
-    --tag-fire-text: #c04a00;
-    --tag-data: #e8f0ff;
-    --tag-data-text: #1a4fbd;
-    --tag-food: #fff8e8;
-    --tag-food-text: #a06000;
-    --tag-learn: #f0e8ff;
-    --tag-learn-text: #6a1abd;
-    --radius: 12px;
-    --radius-sm: 6px;
-    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
-    --shadow-hover: 0 4px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
-    --font: 'Outfit', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: var(--font);
-    background: var(--bg);
-    color: var(--text-primary);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* ---- HEADER ---- */
-  header {
-    padding: 72px 0 56px;
-    max-width: 960px;
-    margin: 0 auto;
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-
-  .header-inner {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: end;
-    gap: 24px;
-  }
-
-  .header-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 12px;
-  }
-
-  h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    color: var(--text-primary);
-  }
-
-  .header-sub {
-    font-size: 1rem;
-    color: var(--text-secondary);
-    margin-top: 10px;
-    font-weight: 400;
-    max-width: 480px;
-  }
-
-  .header-stats {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
-  }
-
-  .stat-number {
-    font-size: 2.4rem;
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    color: var(--text-primary);
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 400;
-  }
-
-  /* ---- FILTER TABS ---- */
-  .filter-bar {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 32px 32px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .filter-btn {
-    padding: 6px 14px;
-    border-radius: 99px;
-    border: 1.5px solid var(--border);
-    background: var(--surface);
-    color: var(--text-secondary);
-    font-size: 13px;
-    font-weight: 500;
-    font-family: var(--font);
-    cursor: pointer;
-    transition: all 0.18s ease;
-  }
-
-  .filter-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .filter-btn.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-  }
-
-  /* ---- GRID ---- */
-  .grid-wrapper {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 32px 80px;
-  }
-
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-  }
-
-  /* ---- CARD ---- */
-  .card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    box-shadow: var(--shadow);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    text-decoration: none;
-    color: inherit;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--accent);
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-
-  .card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-hover);
-  }
-
-  .card:hover::before {
-    opacity: 1;
-  }
-
-  .card.hidden {
-    display: none;
-  }
-
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .card-icon {
-    font-size: 1.6rem;
-    line-height: 1;
-    flex-shrink: 0;
-  }
-
-  .card-tag {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 4px;
-    flex-shrink: 0;
-  }
-
-  .tag-fire { background: var(--tag-fire); color: var(--tag-fire-text); }
-  .tag-data { background: var(--tag-data); color: var(--tag-data-text); }
-  .tag-food { background: var(--tag-food); color: var(--tag-food-text); }
-  .tag-learn { background: var(--tag-learn); color: var(--tag-learn-text); }
-
-  .card-title {
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.3;
-    color: var(--text-primary);
-  }
-
-  .card-desc {
-    font-size: 13.5px;
-    color: var(--text-secondary);
-    line-height: 1.55;
-    flex: 1;
-  }
-
-  .card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 8px;
-    border-top: 1px solid var(--border);
-    margin-top: auto;
-  }
-
-  .card-lang {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 12px;
-    color: var(--text-muted);
-    font-weight: 400;
-  }
-
-  .lang-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .lang-html { background: #e44d26; }
-  .lang-python { background: #3572a5; }
-
-  .card-links {
-    display: flex;
-    gap: 8px;
-  }
-
-  .card-link {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-muted);
-    text-decoration: none;
-    padding: 3px 7px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    transition: all 0.15s ease;
-  }
-
-  .card-link:hover {
-    color: var(--accent);
-    border-color: var(--accent-dim);
-    background: var(--accent-light);
-  }
-
-  /* ---- FOOTER ---- */
-  footer {
-    border-top: 1px solid var(--border);
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 24px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  footer span {
-    font-size: 13px;
-    color: var(--text-muted);
-  }
-
-  footer a {
-    font-size: 13px;
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  footer a:hover { text-decoration: underline; }
-
-  /* ---- RESPONSIVE ---- */
-  @media (max-width: 600px) {
-    header { padding: 48px 20px 36px; }
-    .header-inner { grid-template-columns: 1fr; }
-    .header-stats { align-items: flex-start; }
-    .filter-bar { padding: 0 20px 24px; }
-    .grid-wrapper { padding: 0 20px 60px; }
-    footer { padding: 20px; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .card { transition: none; }
-    .card-link { transition: none; }
-  }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="C85506218 數位產品作品集。以網頁、資料與 AI 改善公共服務及真實工作流程。">
+  <meta name="theme-color" content="#f1efe8">
+  <title>C85506218 — 公共服務數位產品作品集</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{--paper:#f1efe8;--ink:#172137;--red:#e7472e;--blue:#2758cd;--green:#187142;--muted:#6b6e71;--line:#bebdb7;--white:#fff;--max:1320px;--ease:cubic-bezier(.16,1,.3,1)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--paper);font-family:"Noto Sans TC",sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}body::after{content:"";position:fixed;inset:0;z-index:99;pointer-events:none;opacity:.025;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+    a{color:inherit}.wrap{width:min(calc(100% - 48px),var(--max));margin:auto}.mono{font-family:"DM Mono",monospace;text-transform:uppercase;letter-spacing:.07em}.skip{position:fixed;left:16px;top:-80px;z-index:100;padding:10px 14px;color:white;background:var(--ink)}.skip:focus{top:16px}
+    header{position:fixed;inset:0 0 auto;z-index:30;background:rgba(241,239,232,.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--ink)}nav{height:66px;display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:12px;font-weight:900;text-decoration:none}.brand-mark{display:grid;place-items:center;width:31px;height:31px;color:#fff;background:var(--red);font-size:12px}.nav-links{display:flex;align-items:center;gap:27px}.nav-links a{font-size:12px;font-weight:700;text-decoration:none}.nav-links a:hover{color:var(--red)}.status{display:flex;align-items:center;gap:8px}.status i{width:7px;height:7px;background:var(--green);border-radius:50%}
+    .hero{min-height:100svh;padding:112px 0 45px;display:flex;align-items:stretch}.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;width:100%}.hero-copy{display:flex;flex-direction:column;justify-content:space-between;padding:18px 0}.issue{display:flex;justify-content:space-between;padding-bottom:13px;border-bottom:1px solid var(--ink);font-size:10px}.hero h1{margin:35px 0;font-size:clamp(4.2rem,8.2vw,8.5rem);font-weight:900;letter-spacing:-.09em;line-height:.84}.hero h1 em{display:block;color:var(--red);font-style:normal}.intro{display:grid;grid-template-columns:70px 1fr;gap:22px;max-width:620px}.intro-index{font-size:11px}.intro p{margin:0;font-size:clamp(1.05rem,1.6vw,1.3rem);font-weight:500}.intro strong{font-weight:900}
+    .hero-art{position:relative;min-height:680px;overflow:hidden;background:var(--blue)}.hero-art::before{content:"REAL\\A PRODUCTS";white-space:pre;position:absolute;left:28px;top:24px;color:white;font-family:"DM Mono",monospace;font-size:12px;line-height:1.25;z-index:3}.hero-art::after{content:"03";position:absolute;right:-25px;bottom:-115px;color:rgba(255,255,255,.13);font-size:300px;font-weight:900;letter-spacing:-.12em}
+    .shot{position:absolute;display:block;width:48%;border:6px solid white;box-shadow:0 24px 55px rgba(13,23,51,.28);transition:transform .8s var(--ease)}.shot-a{left:8%;top:12%;transform:rotate(-5deg)}.shot-b{right:7%;top:27%;transform:rotate(5deg)}.shot-c{left:21%;bottom:-9%;transform:rotate(-2deg)}.hero-art:hover .shot-a{transform:translate(-7px,-12px) rotate(-7deg)}.hero-art:hover .shot-b{transform:translate(8px,-7px) rotate(7deg)}.hero-art:hover .shot-c{transform:translateY(-14px) rotate(-1deg)}
+    .marquee{overflow:hidden;color:white;background:var(--red);border-block:1px solid var(--ink)}.marquee-track{display:flex;width:max-content;animation:marquee 25s linear infinite}.marquee span{padding:13px 20px;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.08em}.marquee b{margin:0 20px;color:var(--ink)}@keyframes marquee{to{transform:translateX(-50%)}}
+    section{padding:125px 0}.section-top{display:grid;grid-template-columns:150px 1fr;gap:28px;margin-bottom:70px}.section-label{padding-top:12px;font-family:"DM Mono",monospace;font-size:11px}.section-title{margin:0;font-size:clamp(3rem,7vw,7rem);font-weight:900;letter-spacing:-.075em;line-height:.93}.section-title span{color:var(--red)}
+    .case{display:grid;grid-template-columns:5fr 7fr;min-height:720px;margin-bottom:80px;border:1px solid var(--ink);background:#faf9f4}.case:nth-child(even){grid-template-columns:7fr 5fr}.case:nth-child(even) .case-copy{order:2}.case:nth-child(even) .case-media{order:1}.case-copy{padding:clamp(30px,5vw,70px);display:flex;flex-direction:column;justify-content:space-between}.case-no{display:flex;justify-content:space-between;padding-bottom:13px;border-bottom:1px solid var(--ink);font:11px "DM Mono",monospace}.case-no b{color:var(--red)}.case h3{margin:45px 0 20px;font-size:clamp(2.3rem,4.5vw,4.6rem);line-height:1.02;letter-spacing:-.065em}.case-lead{margin:0;color:var(--muted);font-size:16px}.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:38px 0;background:var(--ink);border:1px solid var(--ink)}.case-grid div{padding:14px;background:#faf9f4}.case-grid span{display:block;color:var(--muted);font:9px "DM Mono",monospace}.case-grid strong{display:block;margin-top:4px;font-size:12px}.actions{display:flex;flex-wrap:wrap;gap:9px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:45px;padding:0 17px;border:1px solid var(--ink);background:transparent;font-weight:800;text-decoration:none;cursor:pointer}.btn:hover,.btn.primary{color:#fff;background:var(--ink)}.btn.primary:hover{background:var(--red);border-color:var(--red)}
+    .case-media{position:relative;min-height:650px;padding:7%;display:grid;place-items:center;overflow:hidden;background:var(--case-color)}.case-media::before{content:attr(data-word);position:absolute;left:-.05em;bottom:-.18em;color:rgba(255,255,255,.12);font-size:clamp(8rem,17vw,15rem);font-weight:900;letter-spacing:-.1em}.case-media img{position:relative;width:100%;max-height:590px;object-fit:contain;border:8px solid white;box-shadow:0 35px 80px rgba(10,20,40,.3);transition:.7s var(--ease)}.case:hover .case-media img{transform:scale(1.025) rotate(-.8deg)}
+    .archive{color:var(--ink);background:#dfe5eb;border-block:1px solid var(--ink)}.archive .section-title span{color:var(--red)}.archive-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:34px}.tools{display:flex;gap:8px;flex-wrap:wrap}.filter{padding:9px 13px;color:var(--ink);background:rgba(255,255,255,.38);border:1px solid var(--ink);font-weight:700;cursor:pointer}.filter:hover{background:#fff}.filter.active{color:white;background:var(--ink);border-color:var(--ink)}.search{width:210px;padding:10px 13px;color:var(--ink);background:rgba(255,255,255,.7);border:1px solid var(--ink);outline:none}.search::placeholder{color:#727981}.projects{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-left:1px solid var(--ink);box-shadow:14px 14px 0 rgba(23,33,55,.08)}.project{position:relative;min-height:320px;padding:25px;display:flex;flex-direction:column;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);background:#f8f7f1;transition:.35s var(--ease)}.project:nth-child(4n+2),.project:nth-child(4n+3){background:#eef1ee}.project::before{content:"";position:absolute;inset:0 0 auto;height:0;background:var(--red);transition:.3s var(--ease)}.project:hover{background:#fff;transform:translateY(-6px);box-shadow:0 22px 45px rgba(40,48,63,.16);z-index:2}.project:hover::before{height:6px}.project-top{display:flex;justify-content:space-between}.project-icon{font-size:25px}.project-cat{font:9px "DM Mono",monospace;color:#656d75}.project h3{margin:42px 0 10px;font-size:18px;line-height:1.35}.project-desc{flex:1;margin:0;color:#666b6d;font-size:12px}.project-foot{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-top:25px}.tech{color:#777d82;font:9px "DM Mono",monospace}.project-links{display:flex;gap:6px}.project-links a{padding:5px 7px;border:1px solid currentColor;font:9px "DM Mono",monospace;text-decoration:none}.project-links a:hover{color:white;background:var(--red);border-color:var(--red)}.empty{display:none;padding:50px;text-align:center;border:1px dashed var(--ink)}
+    .about-grid{display:grid;grid-template-columns:1fr 2fr;gap:70px}.about-label{font:11px "DM Mono",monospace}.statement{margin:0;font-size:clamp(2.6rem,5.7vw,5.8rem);font-weight:900;letter-spacing:-.07em;line-height:1.04}.statement span{color:#9b9a95}.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:75px;background:var(--ink);border:1px solid var(--ink)}.principle{padding:28px;background:var(--paper)}.principle i{font:normal 11px "DM Mono",monospace;color:var(--red)}.principle h3{margin:38px 0 9px}.principle p{margin:0;color:var(--muted);font-size:13px}
+    .contact{padding-top:0}.contact-box{display:grid;grid-template-columns:1fr auto;align-items:end;gap:40px;padding:clamp(38px,7vw,90px);color:white;background:var(--red)}.contact-box small{font:11px "DM Mono",monospace}.contact-box h2{max-width:950px;margin:20px 0 0;font-size:clamp(3rem,7vw,7rem);line-height:.92;letter-spacing:-.075em}.contact-box .btn{color:white;border-color:white}.contact-box .btn:hover{color:var(--red);background:white}.contact-arrow{font-size:70px}
+    footer{padding:25px 0;border-top:1px solid var(--ink)}.foot{display:flex;justify-content:space-between;font:10px "DM Mono",monospace}
+    dialog{width:min(calc(100% - 30px),900px);padding:0;border:1px solid var(--ink);background:var(--paper);color:var(--ink);box-shadow:0 40px 100px rgba(0,0,0,.35)}dialog::backdrop{background:rgba(23,33,55,.7);backdrop-filter:blur(7px)}.modal{padding:clamp(30px,6vw,65px)}.close{float:right;width:40px;height:40px;border:1px solid var(--ink);background:transparent;font-size:20px;cursor:pointer}.modal-label{font:10px "DM Mono",monospace;color:var(--red)}.modal h2{max-width:720px;margin:20px 0;font-size:clamp(2.4rem,6vw,5rem);line-height:1;letter-spacing:-.065em}.modal-lead{max-width:680px;color:var(--muted);font-size:17px}.story{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:42px 0;background:var(--ink);border:1px solid var(--ink)}.story article{padding:22px;background:var(--paper)}.story span{font:10px "DM Mono",monospace;color:var(--red)}.story h4{margin:27px 0 8px}.story p{margin:0;color:var(--muted);font-size:12px}
+    .reveal{opacity:0;transform:translateY(35px);transition:.8s var(--ease)}.reveal.visible{opacity:1;transform:none}
+    @media(max-width:1000px){.hero-grid{grid-template-columns:1fr}.hero-art{min-height:650px}.case,.case:nth-child(even){grid-template-columns:1fr}.case:nth-child(even) .case-copy{order:1}.case:nth-child(even) .case-media{order:2}.projects{grid-template-columns:repeat(2,1fr)}.about-grid{grid-template-columns:1fr}.section-top{grid-template-columns:100px 1fr}}
+    @media(max-width:680px){.wrap{width:min(calc(100% - 26px),var(--max))}.nav-links>a:not(.status){display:none}.hero{padding-top:95px}.hero h1{font-size:clamp(3.6rem,19vw,5.7rem)}.hero-art{min-height:470px}.shot{width:57%;border-width:4px}.shot-a{left:4%;top:13%}.shot-b{right:3%;top:31%}.shot-c{left:16%;bottom:-4%}.section-top{grid-template-columns:1fr;gap:18px;margin-bottom:40px}section{padding:85px 0}.case{min-height:0;margin-bottom:35px}.case-copy{min-height:550px}.case-media{min-height:430px}.case-grid{grid-template-columns:1fr}.archive-head{align-items:stretch;flex-direction:column}.search{width:100%}.projects{grid-template-columns:1fr}.project{min-height:260px}.principles,.story{grid-template-columns:1fr}.contact-box{grid-template-columns:1fr}.contact-arrow{display:none}.foot{flex-direction:column;gap:8px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+  </style>
 </head>
 <body>
+  <a class="skip" href="#main">跳至主要內容</a>
+  <header><nav class="wrap"><a class="brand" href="#top"><span class="brand-mark">C</span>C85506218</a><div class="nav-links"><a href="#work">案例</a><a href="#archive">全部作品</a><a href="#about">方法</a><a class="status" href="https://github.com/c85506218-hub" target="_blank" rel="noopener"><i></i>持續創作中</a></div></nav></header>
+  <main id="main">
+    <section class="hero" id="top"><div class="wrap hero-grid">
+      <div class="hero-copy"><div><div class="issue mono"><span>Portfolio / 2026</span><span>Taiwan</span></div><h1>把工作<em>做得更好。</em></h1></div><div class="intro"><span class="intro-index mono">Intro</span><p>我以網頁、資料與 AI，把公共服務及日常營運中的真實問題，轉化成<strong>能上線、有人用、持續改善</strong>的數位產品。</p></div></div>
+      <div class="hero-art"><img class="shot shot-a" src="anonymous-care-preview.svg" alt="匿名化心理支持平台介面"><img class="shot shot-b" src="anonymous-data-preview.svg" alt="匿名化資料監控介面"><img class="shot shot-c" src="anonymous-ai-preview.svg" alt="匿名化 AI 導入歷程介面"></div>
+    </div></section>
+    <div class="marquee"><div class="marquee-track"><span>PUBLIC SERVICE <b>●</b> WEB APPLICATIONS <b>●</b> DATA VISUALIZATION <b>●</b> AI ADOPTION <b>●</b> WORKFLOW DESIGN <b>●</b></span><span>PUBLIC SERVICE <b>●</b> WEB APPLICATIONS <b>●</b> DATA VISUALIZATION <b>●</b> AI ADOPTION <b>●</b> WORKFLOW DESIGN <b>●</b></span></div></div>
 
-<header>
-  <div class="header-inner">
-    <div>
-      <p class="header-label">個人作品集</p>
-      <h1>c85506218<br>的作品</h1>
-      <p class="header-sub">台南消防局相關工具、資料視覺化與個人專案，以網頁技術實作。</p>
-    </div>
-    <div class="header-stats">
-      <span class="stat-number">16</span>
-      <span class="stat-label">個專案</span>
-    </div>
-  </div>
-</header>
+    <section id="work"><div class="wrap">
+      <div class="section-top reveal"><span class="section-label">01 — CASE STUDIES</span><h2 class="section-title">不是練習，<br>是<span>真實問題</span>的解法。</h2></div>
+      <article class="case reveal">
+        <div class="case-copy"><div><div class="case-no"><span>CASE 01</span><b>PUBLIC SERVICE</b></div><h3>讓心理支持，成為容易踏出的第一步。</h3><p class="case-lead">為高壓工作者整合情緒評估、AI 分析、諮商資源與危機協助，並把隱私感受放在產品核心。</p><div class="case-grid"><div><span>FOCUS</span><strong>降低求助門檻</strong></div><div><span>ROLE</span><strong>規劃・設計・開發</strong></div><div><span>FORMAT</span><strong>響應式 Web App</strong></div></div></div><div class="actions"><button class="btn primary story-btn" data-case="eap">閱讀匿名案例</button></div></div>
+        <div class="case-media" style="--case-color:#187142" data-word="CARE"><img src="anonymous-care-preview.svg" alt="匿名化心理支持平台介面" loading="lazy"></div>
+      </article>
+      <article class="case reveal">
+        <div class="case-copy"><div><div class="case-no"><span>CASE 02</span><b>DATA AUTOMATION</b></div><h3>把大量房屋資料，變成一張機會地圖。</h3><p class="case-lead">定期整理低於行情物件、區域均價與屋型資訊，將漫無目的搜尋轉變為有依據的優先篩選。</p><div class="case-grid"><div><span>FOCUS</span><strong>減少人工比對</strong></div><div><span>ROLE</span><strong>資料・介面・部署</strong></div><div><span>STACK</span><strong>Python・Map</strong></div></div></div><div class="actions"><button class="btn primary story-btn" data-case="house">閱讀匿名案例</button></div></div>
+        <div class="case-media" style="--case-color:#e7472e" data-word="MAP"><img src="anonymous-data-preview.svg" alt="匿名化資料監控介面" loading="lazy"></div>
+      </article>
+      <article class="case reveal">
+        <div class="case-copy"><div><div class="case-no"><span>CASE 03</span><b>AI ADOPTION</b></div><h3>把個人探索，轉化成組織可以複製的經驗。</h3><p class="case-lead">記錄 AI 工具如何進入真實工作流程，讓導入不只停在口號與單次教學。</p><div class="case-grid"><div><span>FOCUS</span><strong>知識可複製</strong></div><div><span>ROLE</span><strong>研究・實作・整理</strong></div><div><span>TOOLS</span><strong>AI 知識工具</strong></div></div></div><div class="actions"><button class="btn primary story-btn" data-case="ai">閱讀匿名案例</button></div></div>
+        <div class="case-media" style="--case-color:#2758cd" data-word="AI"><img src="anonymous-ai-preview.svg" alt="匿名化 AI 導入歷程介面" loading="lazy"></div>
+      </article>
+    </div></section>
 
-<nav class="filter-bar" aria-label="分類篩選">
-  <button class="filter-btn active" data-filter="all">全部</button>
-  <button class="filter-btn" data-filter="fire">消防局</button>
-  <button class="filter-btn" data-filter="data">數據分析</button>
-  <button class="filter-btn" data-filter="food">餐飲服務</button>
-  <button class="filter-btn" data-filter="learn">學習工具</button>
-</nav>
+    <section class="archive" id="archive"><div class="wrap">
+      <div class="section-top reveal"><span class="section-label">02 — ARCHIVE</span><h2 class="section-title">16 個上線作品，<br><span>持續增加。</span></h2></div>
+      <div class="archive-head reveal"><div class="tools"><button class="filter active" data-filter="all">全部</button><button class="filter" data-filter="fire">公共服務</button><button class="filter" data-filter="data">數據分析</button><button class="filter" data-filter="food">營運工具</button><button class="filter" data-filter="personal">個人工具</button></div><input class="search" id="search" type="search" placeholder="搜尋專案…" aria-label="搜尋專案"></div>
+      <div class="projects reveal" id="projects"></div><div class="empty" id="empty">沒有符合條件的專案。</div>
+    </div></section>
 
-<main class="grid-wrapper">
-  <div class="projects-grid" id="projectGrid">
-
-    <!-- 消防局 -->
-    <a class="card" data-cat="fire" href="https://c85506218-hub.github.io/ai-pacer-log/work-tracker.html" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">✅</span>
-        <span class="card-tag tag-fire">消防局</span>
-      </div>
-      <div class="card-title">工作事項追蹤</div>
-      <div class="card-desc">消防局工作事項管理工具，追蹤任務進度與待辦清單。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/ai-pacer-log" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://c85506218-hub.github.io/ai-pacer-log/work-tracker.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="fire" href="https://c85506218-hub.github.io/eap-tainan/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">🧠</span>
-        <span class="card-tag tag-fire">消防局</span>
-      </div>
-      <div class="card-title">EAP 心理健康支持平台</div>
-      <div class="card-desc">臺南市消防局員工心理健康平台，含情緒評估、AI 分析、諮商資源與危機熱線，資料僅顯示給本人。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/eap-tainan" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://c85506218-hub.github.io/eap-tainan/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="fire" href="https://c85506218-hub.github.io/tfd-post/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">📋</span>
-        <span class="card-tag tag-fire">消防局</span>
-      </div>
-      <div class="card-title">替代役役男分發管理系統</div>
-      <div class="card-desc">臺南消防局替代役役男分發作業管理工具，支援人員調度與狀態追蹤。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/tfd-post" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://c85506218-hub.github.io/tfd-post/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="fire" href="https://c85506218-hub.github.io/quiet-pixie-7f902d/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">🗺️</span>
-        <span class="card-tag tag-fire">消防局</span>
-      </div>
-      <div class="card-title">消防分隊服務人口地圖</div>
-      <div class="card-desc">臺南市各消防分隊轄區人口分布互動地圖，點擊行政區可查看分隊服務資料。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/quiet-pixie-7f902d" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://c85506218-hub.github.io/quiet-pixie-7f902d/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="fire" href="https://c85506218-hub.github.io/ai-pacer-log/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">🤖</span>
-        <span class="card-tag tag-fire">消防局</span>
-      </div>
-      <div class="card-title">AI 職能導入推動歷程</div>
-      <div class="card-desc">記錄消防局導入 NotebookLM、Copilot 等 AI 工具的推動過程與成果，供組織內部參考。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/ai-pacer-log" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://c85506218-hub.github.io/ai-pacer-log/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="fire" href="https://c85506218-hub.github.io/zesty-pie-afc326/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">🔁</span>
-        <span class="card-tag tag-fire">消防局</span>
-      </div>
-      <div class="card-title">EAP 平台（舊版備份）</div>
-      <div class="card-desc">EAP 心理健康平台的前版本備份，保留舊版介面供比對參考使用。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/zesty-pie-afc326" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://c85506218-hub.github.io/zesty-pie-afc326/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <!-- 數據分析 -->
-    <a class="card" data-cat="data" href="https://stock-dashboard-6gjm.onrender.com/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">📊</span>
-        <span class="card-tag tag-data">數據分析</span>
-      </div>
-      <div class="card-title">每日股市 Dashboard</div>
-      <div class="card-desc">每日股市行情即時儀表板，視覺化呈現股價走勢與市場資訊。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-python"></span>Python</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/stock-dashboard" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://stock-dashboard-6gjm.onrender.com/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="data" href="https://c85506218-hub.github.io/stock-dashboard/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">📈</span>
-        <span class="card-tag tag-data">數據分析</span>
-      </div>
-      <div class="card-title">股票儀表板</div>
-      <div class="card-desc">股價追蹤與視覺化儀表板，以 Flask 為後端，即時呈現股市行情與走勢圖表。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-python"></span>Python</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/stock-dashboard" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://c85506218-hub.github.io/stock-dashboard/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="data" href="https://c85506218-hub.github.io/house-monitor/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">🏠</span>
-        <span class="card-tag tag-data">數據分析</span>
-      </div>
-      <div class="card-title">台南高雄急售房屋監控</div>
-      <div class="card-desc">每週自動爬取 591 低於行情物件，對比區域均價並標示傳統透天，生成互動地圖網站。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-python"></span>Python</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/house-monitor" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://c85506218-hub.github.io/house-monitor/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <!-- 餐飲服務 -->
-    <a class="card" data-cat="food" href="https://honeysecret-order.c85506218.workers.dev/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">📦</span>
-        <span class="card-tag tag-food">餐飲服務</span>
-      </div>
-      <div class="card-title">甜蜜密叫貨系統</div>
-      <div class="card-desc">甜蜜密爆餡雞蛋仔品牌的叫貨管理系統，部署於 Cloudflare Workers。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-html"></span>Workers</span>
-        <div class="card-links">
-          <a class="card-link" href="https://honeysecret-order.c85506218.workers.dev/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="food" href="https://c85506218-hub.github.io/shizhi-hotpot-order/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">🍲</span>
-        <span class="card-tag tag-food">餐飲服務</span>
-      </div>
-      <div class="card-title">石之味點餐表單</div>
-      <div class="card-desc">石之味石頭鍋物餐廳的線上訂位與點餐表單，提供顧客便利的預訂體驗。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/shizhi-hotpot-order" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://c85506218-hub.github.io/shizhi-hotpot-order/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="food" href="https://c85506218-hub.github.io/stellar-kitten-f6a953/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">🧇</span>
-        <span class="card-tag tag-food">餐飲服務</span>
-      </div>
-      <div class="card-title">甜蜜密雞蛋仔加盟招募</div>
-      <div class="card-desc">香港爆餡雞蛋仔品牌「甜蜜密」的加盟招募頁，介紹品牌特色與加盟方案。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/stellar-kitten-f6a953" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://c85506218-hub.github.io/stellar-kitten-f6a953/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <!-- 學習工具 -->
-    <a class="card" data-cat="learn" href="https://c85506218-hub.github.io/vocab-app/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">📚</span>
-        <span class="card-tag tag-learn">學習工具</span>
-      </div>
-      <div class="card-title">英文單字複習 App</div>
-      <div class="card-desc">收錄 2,143 個英文單字，附發音音檔，支援依熟悉程度篩選，卡片式複習介面。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/vocab-app" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://c85506218-hub.github.io/vocab-app/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="learn" href="https://c85506218-hub.github.io/funny-biscuit-ac7bf0/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">💰</span>
-        <span class="card-tag tag-learn">個人工具</span>
-      </div>
-      <div class="card-title">寶寶借款明細</div>
-      <div class="card-desc">個人借款記錄工具，資料本地儲存於瀏覽器，不上傳外部伺服器，保護隱私。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/funny-biscuit-ac7bf0" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://c85506218-hub.github.io/funny-biscuit-ac7bf0/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="learn" href="https://c85506218-hub.github.io/seoul-trip-2026/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">✈️</span>
-        <span class="card-tag tag-learn">個人工具</span>
-      </div>
-      <div class="card-title">首爾之旅 2026 行程</div>
-      <div class="card-desc">2026 年 5 月首爾五日行程規劃，含逐日安排、交通指引、購物清單與實用資訊。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/seoul-trip-2026" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://c85506218-hub.github.io/seoul-trip-2026/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-    <a class="card" data-cat="learn" href="https://c85506218-hub.github.io/lively-rabanadas-47e17c/" target="_blank" rel="noopener">
-      <div class="card-header">
-        <span class="card-icon">❓</span>
-        <span class="card-tag tag-learn">個人工具</span>
-      </div>
-      <div class="card-title">待確認專案</div>
-      <div class="card-desc">用途待確認中，7/1 Netlify 配額重置後可正常查看完整內容。</div>
-      <div class="card-footer">
-        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
-        <div class="card-links">
-          <a class="card-link" href="https://github.com/c85506218-hub/lively-rabanadas-47e17c" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
-          <a class="card-link" href="https://c85506218-hub.github.io/lively-rabanadas-47e17c/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
-        </div>
-      </div>
-    </a>
-
-  </div>
-</main>
-
-<footer>
-  <span>16 個專案 · 2026</span>
-  <a href="https://github.com/c85506218-hub" target="_blank" rel="noopener">github.com/c85506218-hub</a>
-</footer>
-
-<script>
-  const btns = document.querySelectorAll('.filter-btn');
-  const cards = document.querySelectorAll('.card');
-
-  btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      btns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const filter = btn.dataset.filter;
-      cards.forEach(card => {
-        if (filter === 'all' || card.dataset.cat === filter) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-    });
-  });
-</script>
-
+    <section id="about"><div class="wrap"><div class="about-grid reveal"><span class="about-label">03 — APPROACH</span><p class="statement">我不從技術開始。<br>我先問：<span>什麼事情值得被改善？</span></p></div><div class="principles reveal"><article class="principle"><i>01 / OBSERVE</i><h3>理解現場</h3><p>看見誰在使用、流程卡在哪裡，以及真正重要的結果。</p></article><article class="principle"><i>02 / BUILD</i><h3>快速實作</h3><p>先做出可操作的核心版本，讓想法接受真實使用檢驗。</p></article><article class="principle"><i>03 / ITERATE</i><h3>上線迭代</h3><p>根據回饋修正資訊、功能與細節，讓工具持續變得更好。</p></article></div></div></section>
+    <section class="contact"><div class="wrap"><div class="contact-box reveal"><div><small>NEXT PROBLEM / NEXT PRODUCT</small><h2>還有什麼問題，<br>值得做成工具？</h2><a class="btn" href="https://github.com/c85506218-hub" target="_blank" rel="noopener">前往 GitHub ↗</a></div><div class="contact-arrow">↗</div></div></div></section>
+  </main>
+  <footer><div class="wrap foot"><span>© <span id="year"></span> C85506218</span><span>DESIGNED & BUILT IN TAIWAN</span><a href="#top">BACK TO TOP ↑</a></div></footer>
+  <dialog id="modal"><div class="modal"><button class="close" aria-label="關閉">×</button><div id="modalContent"></div></div></dialog>
+  <script>
+    const projects=[
+      ["fire","✅","公共服務","工作事項追蹤","集中追蹤任務進度與待辦清單。","HTML · WEB APP","",""],
+      ["fire","🧠","公共服務","員工心理支持平台","整合評估、AI 分析、諮商資源與危機協助。","HTML · AI","",""],
+      ["fire","📋","公共服務","人員分發管理工具","支援分發作業、人員調度與狀態追蹤。","HTML · MANAGEMENT","",""],
+      ["fire","🗺️","公共服務","服務範圍資料地圖","互動呈現各服務區域的人口與資源資料。","HTML · MAP","",""],
+      ["fire","🤖","公共服務","AI 工具導入歷程","記錄 AI 工具導入過程與組織成果。","HTML · AI","",""],
+      ["fire","🗂️","公共服務","心理支持平台初版","保留前一版本作為介面演進比對。","HTML · ARCHIVE","",""],
+      ["data","📊","數據分析","每日股市 Dashboard","視覺化每日行情、價格走勢與市場資訊。","PYTHON · DASHBOARD","https://stock-dashboard-6gjm.onrender.com/","https://github.com/c85506218-hub/stock-dashboard"],
+      ["data","📈","數據分析","股票儀表板","以 Flask 建構股價追蹤與視覺化工具。","PYTHON · FLASK","https://c85506218-hub.github.io/stock-dashboard/","https://github.com/c85506218-hub/stock-dashboard"],
+      ["data","🏠","數據分析","房屋機會監控","整理低於行情物件並生成互動地圖。","PYTHON · AUTOMATION","",""],
+      ["food","📦","營運工具","品牌叫貨管理系統","協助餐飲品牌處理日常叫貨與品項管理。","CLOUDFLARE WORKERS","",""],
+      ["food","🍲","營運工具","餐飲點餐表單","提供顧客線上訂位與點餐流程。","HTML · FORM","",""],
+      ["food","🧇","營運工具","品牌加盟介紹頁","介紹品牌特色、定位與合作方案。","HTML · LANDING","",""],
+      ["personal","📚","學習工具","英文單字複習 App","2,143 個單字、發音與熟悉度篩選。","HTML · LOCAL DATA","https://c85506218-hub.github.io/vocab-app/","https://github.com/c85506218-hub/vocab-app"],
+      ["personal","💰","個人工具","借款明細工具","資料僅儲存在本機瀏覽器。","HTML · LOCAL STORAGE","https://c85506218-hub.github.io/funny-biscuit-ac7bf0/","https://github.com/c85506218-hub/funny-biscuit-ac7bf0"],
+      ["personal","✈️","個人工具","首爾之旅 2026","整合行程、交通、購物與實用資訊。","HTML · TRAVEL","https://c85506218-hub.github.io/seoul-trip-2026/","https://github.com/c85506218-hub/seoul-trip-2026"],
+      ["personal","🧩","個人工具","實驗性網頁專案","持續整理與更新的前端實驗。","HTML · EXPERIMENT","https://c85506218-hub.github.io/lively-rabanadas-47e17c/","https://github.com/c85506218-hub/lively-rabanadas-47e17c"]
+    ];
+    const stories={
+      eap:{label:"CASE 01 / PUBLIC SERVICE",title:"把心理支持整合成一個安全、清楚的入口。",lead:"高壓工作者可能需要支持，但資訊分散、求助門檻與隱私顧慮，讓第一步特別困難。",items:[["問題","心理資源分散，使用者不知道該從哪裡開始。"],["設計","將自我評估、AI 分析、資源查找與緊急協助整合。"],["價值","降低理解自身狀態與尋求協助的心理門檻。"]]},
+      house:{label:"CASE 02 / DATA AUTOMATION",title:"讓房屋搜尋從憑感覺，變成有依據的篩選。",lead:"每天人工搜尋物件耗時，而且單看售價很難判斷是否真正低於區域行情。",items:[["問題","資訊量大、更新快，人工比對區域均價耗時。"],["設計","整理物件、計算價差，並以互動地圖呈現位置。"],["價值","優先找出值得進一步研究的候選物件。"]]},
+      ai:{label:"CASE 03 / AI ADOPTION",title:"將 AI 探索轉成組織可以繼續使用的知識。",lead:"新工具要真正進入組織，需要的不只是教學，也需要具體情境、應用經驗與持續分享。",items:[["問題","知道 AI 重要，卻不確定如何連結每天的工作。"],["設計","記錄工具測試、使用案例、推動節點與成果。"],["價值","讓下一位使用者能沿著既有經驗更快開始。"]]}
+    };
+    const grid=document.querySelector("#projects"),search=document.querySelector("#search"),filters=[...document.querySelectorAll(".filter")],empty=document.querySelector("#empty");let active="all";
+    function render(){const q=search.value.trim().toLowerCase(),list=projects.filter(p=>(active==="all"||p[0]===active)&&p.join(" ").toLowerCase().includes(q));grid.innerHTML=list.map(p=>{const links=`${p[7]?`<a href="${p[7]}" target="_blank" rel="noopener">CODE</a>`:""}${p[6]?`<a href="${p[6]}" target="_blank" rel="noopener">LIVE ↗</a>`:""}`;return `<article class="project"><div class="project-top"><span class="project-icon">${p[1]}</span><span class="project-cat">${p[2]}</span></div><h3>${p[3]}</h3><p class="project-desc">${p[4]}</p><div class="project-foot"><span class="tech">${p[5]}</span><div class="project-links">${links||"<span>PRIVATE CASE</span>"}</div></div></article>`}).join("");grid.style.display=list.length?"grid":"none";empty.style.display=list.length?"none":"block"}
+    filters.forEach(b=>b.addEventListener("click",()=>{active=b.dataset.filter;filters.forEach(x=>x.classList.toggle("active",x===b));render()}));search.addEventListener("input",render);render();
+    const modal=document.querySelector("#modal"),modalContent=document.querySelector("#modalContent");
+    document.querySelectorAll(".story-btn").forEach(b=>b.addEventListener("click",()=>{const s=stories[b.dataset.case];modalContent.innerHTML=`<span class="modal-label">${s.label}</span><h2>${s.title}</h2><p class="modal-lead">${s.lead}</p><div class="story">${s.items.map((x,i)=>`<article><span>0${i+1}</span><h4>${x[0]}</h4><p>${x[1]}</p></article>`).join("")}</div><p class="modal-lead">基於隱私與合作保密，本案例不提供可追溯的網站或原始碼連結。</p>`;modal.showModal()}));
+    document.querySelector(".close").addEventListener("click",()=>modal.close());modal.addEventListener("click",e=>{if(e.target===modal)modal.close()});
+    const observer=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");observer.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll(".reveal").forEach(e=>observer.observe(e));document.querySelector("#year").textContent=new Date().getFullYear();
+  </script>
 </body>
 </html>

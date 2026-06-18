@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>c85506218 作品集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f6f3;
+    --surface: #ffffff;
+    --surface-2: #f0ede8;
+    --border: #e2ddd6;
+    --text-primary: #1a1916;
+    --text-secondary: #6b6560;
+    --text-muted: #a09a94;
+    --accent: #2d6a4f;
+    --accent-light: #e8f3ee;
+    --accent-dim: #52b788;
+    --tag-fire: #fff0e8;
+    --tag-fire-text: #c04a00;
+    --tag-data: #e8f0ff;
+    --tag-data-text: #1a4fbd;
+    --tag-food: #fff8e8;
+    --tag-food-text: #a06000;
+    --tag-learn: #f0e8ff;
+    --tag-learn-text: #6a1abd;
+    --radius: 12px;
+    --radius-sm: 6px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+    --shadow-hover: 0 4px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+    --font: 'Outfit', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- HEADER ---- */
+  header {
+    padding: 72px 0 56px;
+    max-width: 960px;
+    margin: 0 auto;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .header-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 24px;
+  }
+
+  .header-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--text-primary);
+  }
+
+  .header-sub {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-top: 10px;
+    font-weight: 400;
+    max-width: 480px;
+  }
+
+  .header-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+
+  .stat-number {
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  /* ---- FILTER TABS ---- */
+  .filter-bar {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px 32px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 6px 14px;
+    border-radius: 99px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* ---- GRID ---- */
+  .grid-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  /* ---- CARD ---- */
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .card:hover::before {
+    opacity: 1;
+  }
+
+  .card.hidden {
+    display: none;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .card-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .card-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .tag-fire { background: var(--tag-fire); color: var(--tag-fire-text); }
+  .tag-data { background: var(--tag-data); color: var(--tag-data-text); }
+  .tag-food { background: var(--tag-food); color: var(--tag-food-text); }
+  .tag-learn { background: var(--tag-learn); color: var(--tag-learn-text); }
+
+  .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text-primary);
+  }
+
+  .card-desc {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    flex: 1;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+
+  .card-lang {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .lang-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .lang-html { background: #e44d26; }
+  .lang-python { background: #3572a5; }
+
+  .card-links {
+    display: flex;
+    gap: 8px;
+  }
+
+  .card-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 3px 7px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    transition: all 0.15s ease;
+  }
+
+  .card-link:hover {
+    color: var(--accent);
+    border-color: var(--accent-dim);
+    background: var(--accent-light);
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    border-top: 1px solid var(--border);
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  footer span {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  footer a {
+    font-size: 13px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  footer a:hover { text-decoration: underline; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 600px) {
+    header { padding: 48px 20px 36px; }
+    .header-inner { grid-template-columns: 1fr; }
+    .header-stats { align-items: flex-start; }
+    .filter-bar { padding: 0 20px 24px; }
+    .grid-wrapper { padding: 0 20px 60px; }
+    footer { padding: 20px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card { transition: none; }
+    .card-link { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <p class="header-label">個人作品集</p>
+      <h1>c85506218<br>的作品</h1>
+      <p class="header-sub">台南消防局相關工具、資料視覺化與個人專案，以網頁技術實作。</p>
+    </div>
+    <div class="header-stats">
+      <span class="stat-number">16</span>
+      <span class="stat-label">個專案</span>
+    </div>
+  </div>
+</header>
+
+<nav class="filter-bar" aria-label="分類篩選">
+  <button class="filter-btn active" data-filter="all">全部</button>
+  <button class="filter-btn" data-filter="fire">消防局</button>
+  <button class="filter-btn" data-filter="data">數據分析</button>
+  <button class="filter-btn" data-filter="food">餐飲服務</button>
+  <button class="filter-btn" data-filter="learn">學習工具</button>
+</nav>
+
+<main class="grid-wrapper">
+  <div class="projects-grid" id="projectGrid">
+
+    <!-- 消防局 -->
+    <a class="card" data-cat="fire" href="https://c85506218-hub.github.io/ai-pacer-log/work-tracker.html" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">✅</span>
+        <span class="card-tag tag-fire">消防局</span>
+      </div>
+      <div class="card-title">工作事項追蹤</div>
+      <div class="card-desc">消防局工作事項管理工具，追蹤任務進度與待辦清單。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/ai-pacer-log" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://c85506218-hub.github.io/ai-pacer-log/work-tracker.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="fire" href="https://c85506218-hub.github.io/eap-tainan/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">🧠</span>
+        <span class="card-tag tag-fire">消防局</span>
+      </div>
+      <div class="card-title">EAP 心理健康支持平台</div>
+      <div class="card-desc">臺南市消防局員工心理健康平台，含情緒評估、AI 分析、諮商資源與危機熱線，資料僅顯示給本人。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/eap-tainan" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://c85506218-hub.github.io/eap-tainan/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="fire" href="https://c85506218-hub.github.io/tfd-post/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">📋</span>
+        <span class="card-tag tag-fire">消防局</span>
+      </div>
+      <div class="card-title">替代役役男分發管理系統</div>
+      <div class="card-desc">臺南消防局替代役役男分發作業管理工具，支援人員調度與狀態追蹤。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/tfd-post" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://c85506218-hub.github.io/tfd-post/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="fire" href="https://c85506218-hub.github.io/quiet-pixie-7f902d/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">🗺️</span>
+        <span class="card-tag tag-fire">消防局</span>
+      </div>
+      <div class="card-title">消防分隊服務人口地圖</div>
+      <div class="card-desc">臺南市各消防分隊轄區人口分布互動地圖，點擊行政區可查看分隊服務資料。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/quiet-pixie-7f902d" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://c85506218-hub.github.io/quiet-pixie-7f902d/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="fire" href="https://c85506218-hub.github.io/ai-pacer-log/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">🤖</span>
+        <span class="card-tag tag-fire">消防局</span>
+      </div>
+      <div class="card-title">AI 職能導入推動歷程</div>
+      <div class="card-desc">記錄消防局導入 NotebookLM、Copilot 等 AI 工具的推動過程與成果，供組織內部參考。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/ai-pacer-log" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://c85506218-hub.github.io/ai-pacer-log/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="fire" href="https://c85506218-hub.github.io/zesty-pie-afc326/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">🔁</span>
+        <span class="card-tag tag-fire">消防局</span>
+      </div>
+      <div class="card-title">EAP 平台（舊版備份）</div>
+      <div class="card-desc">EAP 心理健康平台的前版本備份，保留舊版介面供比對參考使用。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/zesty-pie-afc326" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://c85506218-hub.github.io/zesty-pie-afc326/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <!-- 數據分析 -->
+    <a class="card" data-cat="data" href="https://stock-dashboard-6gjm.onrender.com/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">📊</span>
+        <span class="card-tag tag-data">數據分析</span>
+      </div>
+      <div class="card-title">每日股市 Dashboard</div>
+      <div class="card-desc">每日股市行情即時儀表板，視覺化呈現股價走勢與市場資訊。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-python"></span>Python</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/stock-dashboard" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://stock-dashboard-6gjm.onrender.com/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="data" href="https://c85506218-hub.github.io/stock-dashboard/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">📈</span>
+        <span class="card-tag tag-data">數據分析</span>
+      </div>
+      <div class="card-title">股票儀表板</div>
+      <div class="card-desc">股價追蹤與視覺化儀表板，以 Flask 為後端，即時呈現股市行情與走勢圖表。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-python"></span>Python</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/stock-dashboard" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://c85506218-hub.github.io/stock-dashboard/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="data" href="https://c85506218-hub.github.io/house-monitor/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">🏠</span>
+        <span class="card-tag tag-data">數據分析</span>
+      </div>
+      <div class="card-title">台南高雄急售房屋監控</div>
+      <div class="card-desc">每週自動爬取 591 低於行情物件，對比區域均價並標示傳統透天，生成互動地圖網站。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-python"></span>Python</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/house-monitor" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://c85506218-hub.github.io/house-monitor/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <!-- 餐飲服務 -->
+    <a class="card" data-cat="food" href="https://honeysecret-order.c85506218.workers.dev/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">📦</span>
+        <span class="card-tag tag-food">餐飲服務</span>
+      </div>
+      <div class="card-title">甜蜜密叫貨系統</div>
+      <div class="card-desc">甜蜜密爆餡雞蛋仔品牌的叫貨管理系統，部署於 Cloudflare Workers。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-html"></span>Workers</span>
+        <div class="card-links">
+          <a class="card-link" href="https://honeysecret-order.c85506218.workers.dev/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="food" href="https://c85506218-hub.github.io/shizhi-hotpot-order/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">🍲</span>
+        <span class="card-tag tag-food">餐飲服務</span>
+      </div>
+      <div class="card-title">石之味點餐表單</div>
+      <div class="card-desc">石之味石頭鍋物餐廳的線上訂位與點餐表單，提供顧客便利的預訂體驗。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/shizhi-hotpot-order" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://c85506218-hub.github.io/shizhi-hotpot-order/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="food" href="https://c85506218-hub.github.io/stellar-kitten-f6a953/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">🧇</span>
+        <span class="card-tag tag-food">餐飲服務</span>
+      </div>
+      <div class="card-title">甜蜜密雞蛋仔加盟招募</div>
+      <div class="card-desc">香港爆餡雞蛋仔品牌「甜蜜密」的加盟招募頁，介紹品牌特色與加盟方案。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/stellar-kitten-f6a953" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://c85506218-hub.github.io/stellar-kitten-f6a953/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <!-- 學習工具 -->
+    <a class="card" data-cat="learn" href="https://c85506218-hub.github.io/vocab-app/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">📚</span>
+        <span class="card-tag tag-learn">學習工具</span>
+      </div>
+      <div class="card-title">英文單字複習 App</div>
+      <div class="card-desc">收錄 2,143 個英文單字，附發音音檔，支援依熟悉程度篩選，卡片式複習介面。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/vocab-app" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://c85506218-hub.github.io/vocab-app/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="learn" href="https://c85506218-hub.github.io/funny-biscuit-ac7bf0/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">💰</span>
+        <span class="card-tag tag-learn">個人工具</span>
+      </div>
+      <div class="card-title">寶寶借款明細</div>
+      <div class="card-desc">個人借款記錄工具，資料本地儲存於瀏覽器，不上傳外部伺服器，保護隱私。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/funny-biscuit-ac7bf0" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://c85506218-hub.github.io/funny-biscuit-ac7bf0/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="learn" href="https://c85506218-hub.github.io/seoul-trip-2026/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">✈️</span>
+        <span class="card-tag tag-learn">個人工具</span>
+      </div>
+      <div class="card-title">首爾之旅 2026 行程</div>
+      <div class="card-desc">2026 年 5 月首爾五日行程規劃，含逐日安排、交通指引、購物清單與實用資訊。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/seoul-trip-2026" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://c85506218-hub.github.io/seoul-trip-2026/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="learn" href="https://c85506218-hub.github.io/lively-rabanadas-47e17c/" target="_blank" rel="noopener">
+      <div class="card-header">
+        <span class="card-icon">❓</span>
+        <span class="card-tag tag-learn">個人工具</span>
+      </div>
+      <div class="card-title">待確認專案</div>
+      <div class="card-desc">用途待確認中，7/1 Netlify 配額重置後可正常查看完整內容。</div>
+      <div class="card-footer">
+        <span class="card-lang"><span class="lang-dot lang-html"></span>HTML</span>
+        <div class="card-links">
+          <a class="card-link" href="https://github.com/c85506218-hub/lively-rabanadas-47e17c" target="_blank" rel="noopener" onclick="event.stopPropagation()">GitHub</a>
+          <a class="card-link" href="https://c85506218-hub.github.io/lively-rabanadas-47e17c/" target="_blank" rel="noopener" onclick="event.stopPropagation()">網站</a>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<footer>
+  <span>16 個專案 · 2026</span>
+  <a href="https://github.com/c85506218-hub" target="_blank" rel="noopener">github.com/c85506218-hub</a>
+</footer>
+
+<script>
+  const btns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.card');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.cat === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
